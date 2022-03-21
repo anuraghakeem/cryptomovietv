@@ -6,7 +6,25 @@ import { server } from "../config";
 import Hero from "../components/Hero";
 import PopularMovie from '../components/PopularMovie';
 
-const Home: NextPage = ({movies}:any) => {
+type id = number
+interface MOVIE{
+  id: id,
+  title: string,
+  backdrop_path: string,
+  overview: string,
+  genres: [{
+    name: string
+  }],
+  release_date: Date,
+  poster_path: string,
+}
+interface MOVIESCOMP{
+  movies:[
+    MOVIE
+  ]
+}
+
+const Home: NextPage<MOVIESCOMP> = ({movies}) => {
   return (
     <div>
       <Hero />

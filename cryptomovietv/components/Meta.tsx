@@ -1,5 +1,12 @@
 import Head from "next/head";
-const Meta = ({ keywords, description, title }:any) => {
+
+interface METAPROPS{
+    keywords: string,
+    description: string,
+    title: string,
+}
+
+const Meta = ({ keywords, description, title }:METAPROPS) => {
   return (
     <Head>
       <meta name="viewport" content="width=Ddevice-width, initial-scale=1" />

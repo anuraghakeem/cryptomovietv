@@ -3,8 +3,29 @@ import { server } from "../../../config";
 import Image from "next/image";
 import Meta from "../../../components/Meta";
 
-const Movie = ({ movie }: any) => {
-  // console.log(movie);
+type id = number
+interface MOVIE{
+  id: id,
+  title: string,
+  backdrop_path: string,
+  overview: string,
+  genres: [{
+    name: string
+  }],
+  release_date: Date,
+}
+interface MOVIECOMP{
+  movie: MOVIE,
+  
+}
+
+interface CONTEXT{
+  params:{
+    id: string
+  }
+}
+
+const Movie = ({ movie }: MOVIECOMP ) => {
   return (
     <div className="container max-w-4xl mx-auto pt-6">
       <Meta title={movie.title} />
@@ -20,7 +41,7 @@ const Movie = ({ movie }: any) => {
         <p className="mt-5 Otext-gray-600 text-sm">
           Genres:{" "}
           <span className="font-bold">
-            {movie.genres.map((genre: any) => genre.name).join(", ")}
+            {movie.genres.map((genre) => genre.name).join(", ")}
           </span>
         </p>
         <p className="O text-gray-600 text-sm">
@@ -31,12 +52,12 @@ const Movie = ({ movie }: any) => {
   );
 };
 
-export async function getStaticProps(context: any) {
+export async function getStaticProps(context: CONTEXT) {
   const { id } = context.params;
   const res = await axios(
     `${server}/${id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
   );
-  const movie = res.data;
+  const movie: MOVIE = res.data;
   return {
     props: { movie },
   };
@@ -47,8 +68,8 @@ export async function getStaticPaths() {
     `${server}/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`
   );
   const movies = res.data.results;
-  const ids = movies.map((movie: any) => movie.id);
-  const paths = ids.map((id: any) => ({ params: { id: id.toString() } }));
+  const ids = movies.map((movie: MOVIE) => movie.id);
+  const paths = ids.map((id: id) => ({ params: { id: id.toString() } }));
   return {
     paths: paths,
     fallback: false,

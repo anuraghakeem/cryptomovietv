@@ -2,7 +2,11 @@ import Footer from "./Footer";
 import Meta from "./Meta";
 import Navbar from "./Navbar";
 
-const Layout = ({ children }:any) => {
+interface Layout{
+  children: React.ReactNode
+}
+
+const Layout = ({ children }:Layout) => {
   return (
     <>
     <Meta />

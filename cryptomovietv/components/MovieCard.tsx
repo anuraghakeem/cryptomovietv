@@ -1,7 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const MovieCard = ({ movie }: any) => {
+type id = number
+
+interface MOVIE{
+  id: id,
+  title: string,
+  backdrop_path: string,
+  overview: string,
+  genres: [{
+    name: string
+  }],
+  release_date: Date,
+  poster_path: string,
+}
+
+interface MOVIECARD{
+  key:id,
+  movie:MOVIE,
+}
+
+
+const MovieCard = ({ movie }: MOVIECARD) => {
   return (
       <Link href={`/movie/${movie.id}`}>
       <div className="bg-white shadow-sm rounded-md cursor-pointer">
