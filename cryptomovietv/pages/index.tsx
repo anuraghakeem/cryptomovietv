@@ -17,6 +17,7 @@ interface MOVIE{
   }],
   release_date: Date,
   poster_path: string,
+  vote_average: number,
 }
 interface MOVIESCOMP{
   movies:[
