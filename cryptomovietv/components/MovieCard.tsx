@@ -23,7 +23,7 @@ interface MOVIECARD{
 
 
 const MovieCard = ({ movie }: MOVIECARD) => {
-  console.log('movie 1',movie)
+  // console.log('movie 1',movie)
   const rating = movie.vote_average*10;
 
   return (
