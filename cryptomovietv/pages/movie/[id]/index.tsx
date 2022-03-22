@@ -26,6 +26,7 @@ interface CONTEXT{
 }
 
 const Movie = ({ movie }: MOVIECOMP ) => {
+  // console.log('movie',movie)
   return (
     <div className="container max-w-4xl mx-auto pt-6">
       <Meta title={movie.title} />

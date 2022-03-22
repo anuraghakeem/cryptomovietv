@@ -25,6 +25,7 @@ interface MOVIESCOMP{
 }
 
 const Home: NextPage<MOVIESCOMP> = ({movies}) => {
+  // console.log('movies', movies)
   return (
     <div>
       <Hero />
