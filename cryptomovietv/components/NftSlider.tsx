@@ -35,7 +35,7 @@ const imgList = [
 
 const NftSlider = () => {
   return (
-    <div className="pb-10 font-lato container mx-auto px-4 mt-10 items-center justify-center text-center">
+    <div className="pb-10 font-lato container mx-auto px-4 items-center justify-center text-center">
       <h1 className="text-4xl font-semibold text-primary leading-normal mb-5 text-center">
         Join Our NFT Community
       </h1>
