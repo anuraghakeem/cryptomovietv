@@ -3,3 +3,27 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+.slider-dots .react-multi-carousel-dot button{
+    border: 0;
+    background: linear-gradient(135deg, rgba(100, 171, 219, 0.3) 0%, rgba(130, 110, 200, 0.3) 100%);
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.slider-dots .react-multi-carousel-dot.react-multi-carousel-dot--active button{
+    background: linear-gradient(135deg, #64ABDB 0%, #826EC8 100%);
+    border: 0; 
+}
+
+.carousel-container .react-multiple-carousel__arrow--left{
+    background: #A0C5F8;
+    border: white 1px solid; 
+}
+
+.carousel-container .react-multiple-carousel__arrow--right{
+    background: #A0C5F8;
+    border: white 1px solid; 
+}

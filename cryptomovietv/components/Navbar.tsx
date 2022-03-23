@@ -9,7 +9,7 @@ const Navbar = () => {
         tracking-widest font-lato flex flex-row justify-center items-center text-center w-34 gap-4"
       >
         <a
-          className="text-base md: text-2x1 text-center"
+          className="text-base md: text-2x1 text-center hover:text-primary"
           href="https://opensea.io/collection/cryptomovieclub"
           target="_blank"
         >
@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
 
         <a
-          className="text-base md: text-2x1 text-center"
+          className="text-base md: text-2x1 text-center hover:text-primary"
           href="https://twitter.com/cryptomovietv"
           target="_blank"
         >

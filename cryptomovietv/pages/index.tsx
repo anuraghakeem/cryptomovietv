@@ -5,6 +5,7 @@ import { server } from "../config";
 
 import Hero from "../components/Hero";
 import PopularMovie from '../components/PopularMovie';
+import NftSlider from "../components/NftSlider";
 
 type id = number
 interface MOVIE{
@@ -30,6 +31,7 @@ const Home: NextPage<MOVIESCOMP> = ({movies}) => {
   return (
     <div>
       <Hero />
+      <NftSlider />
       <PopularMovie movies={movies} />
     </div>
   );
