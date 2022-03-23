@@ -6,17 +6,17 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-secondaryGradientBlue-1 to-secondaryGradientBlue-2">
       <div
         className="text-neutral-100 p-4 max-w-7x1 mx-auto container
-        tracking-widest font-lato flex flex-row justify-center items-center text-center w-34"
+        tracking-widest font-lato flex flex-row justify-center items-center text-center w-34 gap-4"
       >
         <a
-          className="text-base md: text-2x1 text-center mx-3"
+          className="text-base md: text-2x1 text-center"
           href="https://opensea.io/collection/cryptomovieclub"
           target="_blank"
         >
           Opensea
         </a>
         <Link href="/">
-          <div className="w-16 flex-initial text-center mx-3 cursor-pointer">
+          <div className="w-16 flex-initial text-center cursor-pointer">
             <Image
               src={"/img/navLogo.png"}
               width={16}
@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
 
         <a
-          className="text-base md: text-2x1 text-center mx-3"
+          className="text-base md: text-2x1 text-center"
           href="https://twitter.com/cryptomovietv"
           target="_blank"
         >
