@@ -1,7 +1,8 @@
 import axios from "axios";
 import { server } from "../../../config";
-import Image from "next/image";
 import Meta from "../../../components/Meta";
+import MovieDetails from '../../../components/MovieDetails'
+import Cast from '../../../components/Cast'
 
 type id = number
 interface MOVIE{
@@ -13,10 +14,21 @@ interface MOVIE{
     name: string
   }],
   release_date: Date,
+  tagline: string,
+  vote_average:number,
+
 }
+
+interface WATCHPROVIDER{
+  logo_path?: string 
+}
+
 interface MOVIECOMP{
   movie: MOVIE,
-  
+  watchProviders?: [
+    WATCHPROVIDER
+  ],
+  cast: any,
 }
 
 interface CONTEXT{
@@ -25,43 +37,52 @@ interface CONTEXT{
   }
 }
 
-const Movie = ({ movie }: MOVIECOMP ) => {
-  // console.log('movie',movie)
+const Movie = ({ movie,  watchProviders, cast }: MOVIECOMP ) => {
+  console.log('movie',movie)
+  console.log('cast',cast)
+  // console.log('watchProviders',watchProviders)
   return (
-    <div className="container max-w-4xl mx-auto pt-6">
+    <div className="container max-w-6xl mx-auto pt-6 text-white">
       <Meta title={movie.title} />
-      <div className="px-3">
-        <Image
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          width={1000}
-          height={600}
-          className="rounded-md"
-        />
-        <h1 className="font-bold text-xl my-2">{movie.title}</h1>
-        <p className="tetx-gray-600 text-sm mt-4">{movie.overview}</p>
-        <p className="mt-5 Otext-gray-600 text-sm">
-          Genres:{" "}
-          <span className="font-bold">
-            {movie.genres.map((genre) => genre.name).join(", ")}
-          </span>
-        </p>
-        <p className="O text-gray-600 text-sm">
-          Release Date: <span className=" font-bold">{movie.release_date}</span>
-        </p>
-      </div>
+      {
+        watchProviders?
+        <MovieDetails movie = {movie} watchProviders = {watchProviders} />
+      :
+        <MovieDetails movie = {movie} />
+      }
+      <Cast cast={cast} />
     </div>
   );
 };
 
 export async function getStaticProps(context: CONTEXT) {
   const { id } = context.params;
-  const res = await axios(
+  const movieRes = await axios(
     `${server}/${id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
   );
-  const movie: MOVIE = res.data;
+  const movie: MOVIE = movieRes.data;
+
+  const watchProvidersRes = await axios(
+    `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+  let watchProviders: any = [];
+
+  const castRes = await axios(
+    `${server}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+  const cast: any = castRes.data;
+
+  if(watchProvidersRes.data.results.IN && watchProvidersRes.data.results.IN.flatrate){
+    watchProviders = watchProvidersRes.data.results.IN.flatrate;
+  } 
+  if (watchProviders.length > 0){
+    return {
+      props: { movie, cast, watchProviders },
+    };
+  }
   return {
-    props: { movie },
-  };
+    props: { movie, cast },
+    };  
 }
 
 export async function getStaticPaths() {
