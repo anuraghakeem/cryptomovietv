@@ -5,6 +5,7 @@ import MovieDetails from "../../../components/MovieDetails";
 import Cast from "../../../components/Cast";
 import MovieRecommendation from "../../../components/MovieRecommendations";
 import Reviews from "../../../components/Reviews";
+import VideoList from "../../../components/VideoList";
 
 type id = number;
 interface MOVIE {
@@ -32,6 +33,8 @@ interface MOVIECOMP {
   cast: any;
   recommendations: any;
   reviews: any;
+  videos: any;
+  trailer: any;
 }
 
 interface CONTEXT {
@@ -46,21 +49,27 @@ const Movie = ({
   cast,
   recommendations,
   reviews,
+  videos,
+  trailer,
 }: MOVIECOMP) => {
   // console.log('movie',movie)
   // console.log('cast',cast)
-  console.log("reviews", reviews);
+  // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
+  // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
+  console.log('videos:',videos)
+  console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
       <Meta title={movie.title} />
       {watchProviders ? (
-        <MovieDetails movie={movie} watchProviders={watchProviders} />
+        <MovieDetails movie={movie} watchProviders={watchProviders} trailer={trailer} />
       ) : (
-        <MovieDetails movie={movie} />
+        <MovieDetails movie={movie} trailer={trailer} />
       )}
       <Cast cast={cast} />
       <Reviews reviews={reviews} />
+      <VideoList />
       <MovieRecommendation recommendations={recommendations} />
     </div>
   );
@@ -89,6 +98,13 @@ export async function getStaticProps(context: CONTEXT) {
 
   const reviews = reviewsRes.data.results;
 
+  const videosRes = await axios(
+    `${server}/${id}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+
+  const videos = videosRes.data;
+  const trailer = videos.results.find((video:any)=> video.type=='Trailer' )
+
   const watchProvidersRes = await axios(
     `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
@@ -103,12 +119,12 @@ export async function getStaticProps(context: CONTEXT) {
 
   if (watchProviders.length > 0) {
     return {
-      props: { movie, cast, recommendations, reviews, watchProviders },
+      props: { movie, cast, recommendations, reviews, videos, trailer, watchProviders },
     };
   }
 
   return {
-    props: { movie, cast, recommendations, reviews },
+    props: { movie, cast, recommendations, reviews, videos, trailer },
   };
 }
 

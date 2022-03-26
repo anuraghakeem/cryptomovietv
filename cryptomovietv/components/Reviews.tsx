@@ -7,7 +7,7 @@ const Reviews = ({ reviews }: any) => {
         {!!reviews &&
           reviews.slice(0, 2).map((review: any) => {
             return (
-              <div className="mb-6 px-12 py-16 bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md">
+              <div className="mb-6 px-12 py-16 bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md" key={review.id}>
                 <p className="text-lato font-normal text-white text-base mb-1">
                   {review.content}
                 </p>

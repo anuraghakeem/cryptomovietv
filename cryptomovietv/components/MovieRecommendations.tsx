@@ -8,7 +8,7 @@ const MovieRecommendation = ({recommendations}:any) => {
         {!!recommendations &&
           recommendations
             .slice(0, 5)
-            .map((recommendation: any) => <RecommendationCard recommendation={recommendation} />)}
+            .map((recommendation: any) => <RecommendationCard recommendation={recommendation} key={recommendation.id}/>)}
       </div>
     </div>
   );

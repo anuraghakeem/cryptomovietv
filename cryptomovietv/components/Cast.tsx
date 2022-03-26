@@ -8,7 +8,7 @@ const Cast = ({ cast }: any) => {
         {!!cast &&
           cast.cast
             .slice(0, 5)
-            .map((person: any) => <CastCard person={person} />)}
+            .map((person: any) => <CastCard person={person} key={person.id}/>)}
       </div>
     </div>
   );
