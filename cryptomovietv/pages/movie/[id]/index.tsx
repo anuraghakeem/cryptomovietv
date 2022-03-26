@@ -1,56 +1,67 @@
 import axios from "axios";
 import { server } from "../../../config";
 import Meta from "../../../components/Meta";
-import MovieDetails from '../../../components/MovieDetails'
-import Cast from '../../../components/Cast'
+import MovieDetails from "../../../components/MovieDetails";
+import Cast from "../../../components/Cast";
+import MovieRecommendation from "../../../components/MovieRecommendations";
+import Reviews from "../../../components/Reviews";
 
-type id = number
-interface MOVIE{
-  id: id,
-  title: string,
-  backdrop_path: string,
-  overview: string,
-  genres: [{
-    name: string
-  }],
-  release_date: Date,
-  tagline: string,
-  vote_average:number,
-
+type id = number;
+interface MOVIE {
+  id: id;
+  title: string;
+  backdrop_path: string;
+  overview: string;
+  genres: [
+    {
+      name: string;
+    }
+  ];
+  release_date: Date;
+  tagline: string;
+  vote_average: number;
 }
 
-interface WATCHPROVIDER{
-  logo_path?: string 
+interface WATCHPROVIDER {
+  logo_path?: string;
 }
 
-interface MOVIECOMP{
-  movie: MOVIE,
-  watchProviders?: [
-    WATCHPROVIDER
-  ],
-  cast: any,
+interface MOVIECOMP {
+  movie: MOVIE;
+  watchProviders?: [WATCHPROVIDER];
+  cast: any;
+  recommendations: any;
+  reviews: any;
 }
 
-interface CONTEXT{
-  params:{
-    id: string
-  }
+interface CONTEXT {
+  params: {
+    id: string;
+  };
 }
 
-const Movie = ({ movie,  watchProviders, cast }: MOVIECOMP ) => {
-  console.log('movie',movie)
-  console.log('cast',cast)
+const Movie = ({
+  movie,
+  watchProviders,
+  cast,
+  recommendations,
+  reviews,
+}: MOVIECOMP) => {
+  // console.log('movie',movie)
+  // console.log('cast',cast)
+  console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
   return (
-    <div className="container max-w-6xl mx-auto pt-6 text-white">
+    <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
       <Meta title={movie.title} />
-      {
-        watchProviders?
-        <MovieDetails movie = {movie} watchProviders = {watchProviders} />
-      :
-        <MovieDetails movie = {movie} />
-      }
+      {watchProviders ? (
+        <MovieDetails movie={movie} watchProviders={watchProviders} />
+      ) : (
+        <MovieDetails movie={movie} />
+      )}
       <Cast cast={cast} />
+      <Reviews reviews={reviews} />
+      <MovieRecommendation recommendations={recommendations} />
     </div>
   );
 };
@@ -61,28 +72,44 @@ export async function getStaticProps(context: CONTEXT) {
     `${server}/${id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
   );
   const movie: MOVIE = movieRes.data;
+  const castRes = await axios(
+    `${server}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+  const cast: any = castRes.data;
+
+  const recommendationRes = await axios(
+    `${server}/${id}/recommendations?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+
+  const recommendations = recommendationRes.data.results;
+
+  const reviewsRes = await axios(
+    `${server}/${id}/reviews?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+  );
+
+  const reviews = reviewsRes.data.results;
 
   const watchProvidersRes = await axios(
     `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
   let watchProviders: any = [];
 
-  const castRes = await axios(
-    `${server}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
-  );
-  const cast: any = castRes.data;
-
-  if(watchProvidersRes.data.results.IN && watchProvidersRes.data.results.IN.flatrate){
+  if (
+    watchProvidersRes.data.results.IN &&
+    watchProvidersRes.data.results.IN.flatrate
+  ) {
     watchProviders = watchProvidersRes.data.results.IN.flatrate;
-  } 
-  if (watchProviders.length > 0){
+  }
+
+  if (watchProviders.length > 0) {
     return {
-      props: { movie, cast, watchProviders },
+      props: { movie, cast, recommendations, reviews, watchProviders },
     };
   }
+
   return {
-    props: { movie, cast },
-    };  
+    props: { movie, cast, recommendations, reviews },
+  };
 }
 
 export async function getStaticPaths() {
