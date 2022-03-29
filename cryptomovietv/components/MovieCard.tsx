@@ -29,7 +29,7 @@ const MovieCard = ({ movie }: MOVIECARD) => {
 
   return (
     <Link href={`/movie/${movie.id}`}>
-      <div className="bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md cursor-pointer">
+      <div className="bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md cursor-pointer hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out group">
         <Image
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           width={500 * 1.2}
@@ -40,7 +40,7 @@ const MovieCard = ({ movie }: MOVIECARD) => {
           <p className="text-lato font-normal text-white text-base mb-1">
             {rating}%
           </p>
-          <div className="text-lato text-primary font-bold text-xl mb-1">
+          <div className="text-lato text-primary font-bold text-xl mb-1 group-hover:text-white">
             {movie.title}
           </div>
           <p className="text-lato font-normal text-white text-base mb-1">

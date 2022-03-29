@@ -40,7 +40,7 @@ const NftSlider = () => {
         Join Our NFT Community
       </h1>
       <a href="https://opensea.io/collection/cryptomovieclub" target='_blank'>
-        <button className="bg-gradient-to-r from-secondaryGradientBlue-1 to-secondaryGradientBlue-2 text-white py-4 px-16 rounded text-sm mb-9">
+        <button className="bg-gradient-to-r from-secondaryGradientBlue-1 to-secondaryGradientBlue-2 text-white py-4 px-16 rounded text-sm mb-9 hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out">
           View Collection
         </button>
       </a>

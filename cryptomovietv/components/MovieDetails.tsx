@@ -51,7 +51,7 @@ const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
             className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10`}
           >
             <button
-              className={`float-right bg-primary text-white py-4 px-5 rounded-full text-sm`}
+              className={`float-right bg-primary text-white py-4 px-5 rounded-full text-sm hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out`}
               onClick={() => setOpen(false)}
             >
               X
@@ -71,7 +71,7 @@ const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
             className="rounded-md"
           />
           <button
-            className={`bg-primary text-black py-4 px-16 rounded text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5`}
+            className={`bg-primary text-black py-4 px-16 rounded text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out`}
             onClick={() => setOpen(true)}
           >
             Play Trailer

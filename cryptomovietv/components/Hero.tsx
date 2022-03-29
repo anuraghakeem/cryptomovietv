@@ -26,7 +26,7 @@ const Hero = () => {
           </p>
           <div>
             <Link href='/#popular-movie'>
-              <button className="bg-gradient-to-r from-secondaryGradientBlue-1 to-secondaryGradientBlue-2 text-white py-4 px-16 rounded text-sm">
+              <button className="bg-gradient-to-r from-secondaryGradientBlue-1 to-secondaryGradientBlue-2 text-white py-4 px-16 rounded text-sm hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out">
                 Start Watching
               </button>
             </Link>
