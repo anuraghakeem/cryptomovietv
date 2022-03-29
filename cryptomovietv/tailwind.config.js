@@ -19,6 +19,10 @@ module.exports = {
         'cardGradientBlue-1': 'rgba(166, 161, 224, 0.3)',
         'cardGradientBlue-2': 'rgba(161, 243, 254, 0.3)',
       },
+      spacing: {
+        '128': '32rem',
+        '156': '39rem',
+      }
     },
   },
   plugins: [
