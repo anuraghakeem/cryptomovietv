@@ -57,8 +57,8 @@ const Movie = ({
   // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
   // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
-  console.log('videos:',videos)
-  console.log('trailer:',trailer)
+  // console.log('videos:',videos)
+  // console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
       <Meta title={movie.title} />
