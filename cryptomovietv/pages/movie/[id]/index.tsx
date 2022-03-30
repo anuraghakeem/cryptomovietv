@@ -50,23 +50,23 @@ const Movie = ({
   recommendations,
   reviews,
   videos,
-  trailer,
+  // trailer,
 }: MOVIECOMP) => {
-  // console.log('movie',movie)
+  console.log('movie',movie)
   // console.log('cast',cast)
   // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
   // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
-  // console.log('videos:',videos)
+  console.log('videos:',videos)
   // console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
       <Meta title={movie.title} />
-      {watchProviders ? (
+      {/* {watchProviders ? (
         <MovieDetails movie={movie} watchProviders={watchProviders} trailer={trailer} />
       ) : (
         <MovieDetails movie={movie} trailer={trailer} />
-      )}
+      )} */}
       <Cast cast={cast} />
       <Reviews reviews={reviews} />
       <VideoList />
@@ -118,13 +118,15 @@ export async function getStaticProps(context: CONTEXT) {
   }
 
   if (watchProviders.length > 0) {
-    return {
-      props: { movie, cast, recommendations, reviews, videos, trailer, watchProviders },
-    };
+    if(videos.length> 0){
+      return {
+        props: { movie, cast, recommendations, reviews, videos, watchProviders, trailer },
+      };
+    }
+    
   }
-
   return {
-    props: { movie, cast, recommendations, reviews, videos, trailer },
+    props: { movie, cast, recommendations, reviews },
   };
 }
 
