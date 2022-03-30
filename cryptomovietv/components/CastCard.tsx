@@ -14,7 +14,7 @@ const CastCard = ({ person }: any) => {
           {person.character}
         </div>
         <p className="ext-lato font-normal text-white text-base mb-1">
-          {person.character}
+          {person.name}
         </p>
       </div>
     </div>
