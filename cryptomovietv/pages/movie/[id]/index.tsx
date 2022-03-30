@@ -33,8 +33,8 @@ interface MOVIECOMP {
   cast: any;
   recommendations: any;
   reviews: any;
-  videos: any;
-  trailer: any;
+  videos?: any;
+  trailer?: any;
 }
 
 interface CONTEXT {
@@ -50,7 +50,7 @@ const Movie = ({
   recommendations,
   reviews,
   videos,
-  // trailer,
+  trailer,
 }: MOVIECOMP) => {
   console.log('movie',movie)
   // console.log('cast',cast)
@@ -62,14 +62,14 @@ const Movie = ({
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
       <Meta title={movie.title} />
-      {/* {watchProviders ? (
+      {watchProviders ? (
         <MovieDetails movie={movie} watchProviders={watchProviders} trailer={trailer} />
       ) : (
         <MovieDetails movie={movie} trailer={trailer} />
-      )} */}
+      )}
       <Cast cast={cast} />
-      <Reviews reviews={reviews} />
-      <VideoList />
+      {!!reviews && reviews.length>0 && <Reviews reviews={reviews} />}
+      {!!videos && videos.length>0 && <VideoList />}
       <MovieRecommendation recommendations={recommendations} />
     </div>
   );
@@ -102,8 +102,8 @@ export async function getStaticProps(context: CONTEXT) {
     `${server}/${id}/videos?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
 
-  const videos = videosRes.data;
-  const trailer = videos.results.find((video:any)=> video.type=='Trailer' )
+  const videos = videosRes.data.results;
+  const trailer = videos.find((video:any)=> video.type=='Trailer' )
 
   const watchProvidersRes = await axios(
     `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
@@ -117,16 +117,17 @@ export async function getStaticProps(context: CONTEXT) {
     watchProviders = watchProvidersRes.data.results.IN.flatrate;
   }
 
-  if (watchProviders.length > 0) {
-    if(videos.length> 0){
-      return {
-        props: { movie, cast, recommendations, reviews, videos, watchProviders, trailer },
-      };
-    }
-    
+  let props:any = {movie, cast, recommendations, reviews}
+  
+  if(watchProviders.length > 0){
+    props = {...props, watchProviders}
+  }
+
+  if(videos.length> 0){
+    props = {...props, videos, trailer}
   }
   return {
-    props: { movie, cast, recommendations, reviews },
+    props,
   };
 }
 

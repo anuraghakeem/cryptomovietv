@@ -1,5 +1,5 @@
 const Reviews = ({ reviews }: any) => {
-  console.log("reviews2:", reviews);
+  // console.log("reviews2:", reviews);
   return (
     <div className="mt-16">
       <h1 className="font-bold text-4xl my-2 text-primary ">Reviews</h1>

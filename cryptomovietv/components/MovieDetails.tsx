@@ -26,7 +26,7 @@ interface WATCHPROVIDER {
 interface MOVIECOMP {
   movie: MOVIE;
   watchProviders?: [WATCHPROVIDER];
-  trailer: any;
+  trailer?: any;
 }
 
 interface CONTEXT {
@@ -38,6 +38,7 @@ interface CONTEXT {
 const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
   const rating = movie.vote_average * 10;
   const [isOpen, setOpen] = useState(false);
+  console.log('trailer2',trailer)
 
   return (
     <>
@@ -70,12 +71,16 @@ const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
             layout="responsive"
             className="rounded-md"
           />
-          <button
+          {
+            !!trailer &&
+            <button
             className={`bg-primary text-black py-4 px-16 rounded text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-5 hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out`}
             onClick={() => setOpen(true)}
           >
             Play Trailer
           </button>
+          }
+          
         </div>
         <p className="font-semibold mt-4">{movie.tagline}</p>
         <h1 className="font-bold text-4xl my-2 text-primary ">{movie.title}</h1>
