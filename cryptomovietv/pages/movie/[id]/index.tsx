@@ -52,12 +52,12 @@ const Movie = ({
   filteredVideos,
   trailer,
 }: MOVIECOMP) => {
-  console.log('movie',movie)
+  // console.log('movie',movie)
   // console.log('cast',cast)
   // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
   // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
-  console.log('videos:',filteredVideos.map((video:any)=>video.type))
+  // console.log('videos:',filteredVideos.map((video:any)=>video.type))
   // console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">

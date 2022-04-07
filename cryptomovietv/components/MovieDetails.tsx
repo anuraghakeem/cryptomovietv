@@ -38,7 +38,7 @@ interface CONTEXT {
 const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
   const rating = movie.vote_average * 10;
   const [isOpen, setOpen] = useState(false);
-  console.log('trailer2',trailer)
+  // console.log('trailer2',trailer)
 
   return (
     <>
