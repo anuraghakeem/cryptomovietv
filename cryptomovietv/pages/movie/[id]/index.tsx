@@ -33,7 +33,7 @@ interface MOVIECOMP {
   cast: any;
   recommendations: any;
   reviews: any;
-  videos?: any;
+  filteredVideos?: any;
   trailer?: any;
 }
 
@@ -49,7 +49,7 @@ const Movie = ({
   cast,
   recommendations,
   reviews,
-  videos,
+  filteredVideos,
   trailer,
 }: MOVIECOMP) => {
   console.log('movie',movie)
@@ -57,7 +57,7 @@ const Movie = ({
   // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
   // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
-  console.log('videos:',videos)
+  console.log('videos:',filteredVideos.map((video:any)=>video.type))
   // console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
@@ -69,7 +69,7 @@ const Movie = ({
       )}
       <Cast cast={cast} />
       {!!reviews && reviews.length>0 && <Reviews reviews={reviews} />}
-      {!!videos && videos.length>0 && <VideoList />}
+      {!!filteredVideos && filteredVideos.length>0 && <VideoList videos={filteredVideos} />}
       <MovieRecommendation recommendations={recommendations} />
     </div>
   );
@@ -104,6 +104,7 @@ export async function getStaticProps(context: CONTEXT) {
 
   const videos = videosRes.data.results;
   const trailer = videos.find((video:any)=> video.type=='Trailer' )
+  const filteredVideos = videos.filter( (video:any) => video.type!='Trailer' && video.site=='YouTube' );
 
   const watchProvidersRes = await axios(
     `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
@@ -124,7 +125,7 @@ export async function getStaticProps(context: CONTEXT) {
   }
 
   if(videos.length> 0){
-    props = {...props, videos, trailer}
+    props = {...props, filteredVideos, trailer}
   }
   return {
     props,
@@ -133,7 +134,7 @@ export async function getStaticProps(context: CONTEXT) {
 
 export async function getStaticPaths() {
   const res = await axios(
-    `${server}/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`
+    `${server}/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
   );
   const movies = res.data.results;
   const ids = movies.map((movie: MOVIE) => movie.id);
