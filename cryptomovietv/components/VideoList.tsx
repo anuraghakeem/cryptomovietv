@@ -7,7 +7,7 @@ const VideoList = ({ videos }: any) => {
   return (
     <div className="mt-16">
       <h1 className="font-bold text-4xl my-2 text-primary ">More Videos</h1>
-      <div className="mt-6 grid gap-2  grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {videos.slice(0, 6).map((video: any) => {
           return(
             <iframe
