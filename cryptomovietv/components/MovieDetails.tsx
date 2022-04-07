@@ -23,10 +23,16 @@ interface WATCHPROVIDER {
   logo_path?: string;
 }
 
+interface VIDEO{
+  site: string;
+  type: string;
+  key: string;
+}
+
 interface MOVIECOMP {
   movie: MOVIE;
-  watchProviders?: [WATCHPROVIDER];
-  trailer?: any;
+  watchProviders?: WATCHPROVIDER[];
+  trailer?: VIDEO;
 }
 
 interface CONTEXT {
@@ -95,7 +101,7 @@ const MovieDetails = ({ movie, watchProviders, trailer }: MOVIECOMP) => {
         {watchProviders && (
           <>
             <p className="mt-8 font-bold mb-4">Now Streaming In India On:</p>
-            {watchProviders.map((watchProvider: any) => {
+            {watchProviders.map((watchProvider: WATCHPROVIDER) => {
               return (
                 <Image
                   src={`https://www.themoviedb.org/t/p/original${watchProvider.logo_path}`}

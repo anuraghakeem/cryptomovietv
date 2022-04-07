@@ -6,6 +6,7 @@ import Cast from "../../../components/Cast";
 import MovieRecommendation from "../../../components/MovieRecommendations";
 import Reviews from "../../../components/Reviews";
 import VideoList from "../../../components/VideoList";
+import { useState } from "react";
 
 type id = number;
 interface MOVIE {
@@ -27,14 +28,46 @@ interface WATCHPROVIDER {
   logo_path?: string;
 }
 
+interface PERSON {
+  profile_path: string;
+  id: number;
+  name: string;
+  character: string;
+}
+interface CAST {
+  cast: [
+    PERSON
+  ]
+}
+
+interface RECOMMENDATION{
+  poster_path: string;
+  id: number;
+  vote_average: number;
+  title: string;
+  release_date: Date;
+}
+
+interface REVIEWS{
+  author: string;
+  content: string;
+  id: number;
+}
+
+interface VIDEO{
+  site: string;
+  type: string;
+  key: string;
+}
+
 interface MOVIECOMP {
   movie: MOVIE;
-  watchProviders?: [WATCHPROVIDER];
-  cast: any;
-  recommendations: any;
-  reviews: any;
-  filteredVideos?: any;
-  trailer?: any;
+  watchProviders?: WATCHPROVIDER[];
+  cast: CAST;
+  recommendations?: [RECOMMENDATION];
+  reviews?: [REVIEWS];
+  filteredVideos?: [VIDEO];
+  trailer?: VIDEO;
 }
 
 interface CONTEXT {
@@ -56,8 +89,7 @@ const Movie = ({
   // console.log('cast',cast)
   // console.log("reviews", reviews);
   // console.log('watchProviders',watchProviders)
-  // const trailer= videos.results.find((video:any)=> video.type=='Trailer' )
-  // console.log('videos:',filteredVideos.map((video:any)=>video.type))
+  // console.log('filteredVideos:', filteredVideos)
   // console.log('trailer:',trailer)
   return (
     <div className="container max-w-6xl mx-auto pt-6 text-white px-2">
@@ -70,7 +102,8 @@ const Movie = ({
       <Cast cast={cast} />
       {!!reviews && reviews.length>0 && <Reviews reviews={reviews} />}
       {!!filteredVideos && filteredVideos.length>0 && <VideoList videos={filteredVideos} />}
-      <MovieRecommendation recommendations={recommendations} />
+      {!!recommendations && recommendations.length>0 && <MovieRecommendation recommendations={recommendations} />}
+      
     </div>
   );
 };
@@ -84,7 +117,7 @@ export async function getStaticProps(context: CONTEXT) {
   const castRes = await axios(
     `${server}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
-  const cast: any = castRes.data;
+  const cast: CAST = castRes.data;
 
   const recommendationRes = await axios(
     `${server}/${id}/recommendations?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
@@ -103,22 +136,24 @@ export async function getStaticProps(context: CONTEXT) {
   );
 
   const videos = videosRes.data.results;
-  const trailer = videos.find((video:any)=> video.type=='Trailer' )
-  const filteredVideos = videos.filter( (video:any) => video.type!='Trailer' && video.site=='YouTube' );
+  const trailer = videos.find((video:VIDEO)=> video.type=='Trailer' )
+  const filteredVideos = videos.filter( (video:VIDEO) => video.type!='Trailer' && video.site=='YouTube' ).slice(0,6);
 
   const watchProvidersRes = await axios(
     `${server}/${id}/watch/providers?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
-  let watchProviders: any = [];
+  let watchProviders:WATCHPROVIDER[] = [];
+  // const [watchProviders, updateWatchProviders] = useState<WATCHPROVIDER[]>([])
 
   if (
     watchProvidersRes.data.results.IN &&
     watchProvidersRes.data.results.IN.flatrate
   ) {
     watchProviders = watchProvidersRes.data.results.IN.flatrate;
+    // updateWatchProviders(watchProvidersRes.data.results.IN.flatrate)
   }
 
-  let props:any = {movie, cast, recommendations, reviews}
+  let props:MOVIECOMP = {movie, cast, recommendations, reviews}
   
   if(watchProviders.length > 0){
     props = {...props, watchProviders}

@@ -1,6 +1,19 @@
 import RecommendationCard from "./RecommendationCard";
 
-const MovieRecommendation = ({recommendations}:any) => {
+
+interface RECOMMENDATION{
+  poster_path: string;
+  id: number;
+  vote_average: number;
+  title: string;
+  release_date: Date;
+}
+interface MOVIERECOMMENDATIONCONTEXT{
+  recommendations: [RECOMMENDATION]
+}
+
+const MovieRecommendation = ({recommendations}:MOVIERECOMMENDATIONCONTEXT) => {
+  // console.log('recommendation: ', recommendations)
   return (
     <div className="mt-16">
       <h1 className="font-bold text-4xl my-2 text-primary ">You Will Also Love ❤</h1>
@@ -8,7 +21,7 @@ const MovieRecommendation = ({recommendations}:any) => {
         {!!recommendations &&
           recommendations
             .slice(0, 5)
-            .map((recommendation: any) => <RecommendationCard recommendation={recommendation} key={recommendation.id}/>)}
+            .map((recommendation: RECOMMENDATION) => <RecommendationCard recommendation={recommendation} key={recommendation.id}/>)}
       </div>
     </div>
   );

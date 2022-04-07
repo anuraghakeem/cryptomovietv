@@ -1,27 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+interface RECOMMENDATION{
+  poster_path: string;
+  id: number;
+  vote_average: number;
+  title: string;
+  release_date: Date;
+}
 
-// type id = number
+interface RECOMMENDATIONCARD{
+  recommendation: RECOMMENDATION
+}
 
-// interface MOVIE{
-//   id: id,
-//   title: string,
-//   backdrop_path: string,
-//   overview: string,
-//   genres: [{
-//     name: string
-//   }],
-//   release_date: Date,
-//   poster_path: string,
-//   vote_average:number,
-// }
-
-// interface MOVIECARD{
-//   key:id,
-//   movie:MOVIE,
-// }
-
-const RecommendationCard = ({ recommendation }: any) => {
+const RecommendationCard = ({ recommendation }: RECOMMENDATIONCARD) => {
   // console.log('movie 1',movie)
   const decimalPlaces = 2;
   const ratingRaw = recommendation.vote_average * 10;

@@ -1,8 +1,14 @@
 import Image from "next/image";
 
-const CastCard = ({ person }: any) => {
+interface PERSONCONTEXT {
+  person: {
+    profile_path: string, id: number, name: string, character: string
+  };
+}
+
+const CastCard = ({ person }: PERSONCONTEXT) => {
   return (
-    <div className="bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md cursor-pointer hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out group" >
+    <div className="bg-gradient-to-r from-cardGradientBlue-1 to-cardGradientBlue-2 border-solid border-2 border-primary shadow-sm rounded-md cursor-pointer hover:shadow-lg hover:shadow-primary/50 hover:bg-primary transition ease-in-out group">
       <Image
         src={`https://image.tmdb.org/t/p/w276_and_h350_face/${person.profile_path}`}
         width={276}
@@ -14,7 +20,8 @@ const CastCard = ({ person }: any) => {
           {person.name}
         </div>
         <p className="ext-lato font-normal text-white text-base mb-1">
-        {"as "}{person.character}
+          {"as "}
+          {person.character}
         </p>
       </div>
     </div>

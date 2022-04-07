@@ -1,14 +1,23 @@
 import { useState } from "react";
 // const ModalVideo = require('react-modal-video')
 
-const VideoList = ({ videos }: any) => {
-  console.log("videos", videos);
-  const [isOpen, setOpen] = useState(false);
+interface VIDEO{
+  site: string;
+  type: string;
+  key: string;
+}
+interface VIDEOSCONTEXT{
+  videos : [VIDEO]
+}
+
+const VideoList = ({ videos }: VIDEOSCONTEXT) => {
+  // console.log("videos", videos);
+  // const [isOpen, setOpen] = useState(false);
   return (
     <div className="mt-16">
       <h1 className="font-bold text-4xl my-2 text-primary ">More Videos</h1>
       <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {videos.slice(0, 6).map((video: any) => {
+        {videos.map((video: VIDEO) => {
           return(
             <iframe
             // width="960"
