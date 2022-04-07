@@ -11,10 +11,10 @@ const CastCard = ({ person }: any) => {
       />
       <div className="px-6 py-2">
         <div className="text-lato text-primary font-bold text-xl mb-1 group-hover:text-white">
-          {person.character}
+          {person.name}
         </div>
         <p className="ext-lato font-normal text-white text-base mb-1">
-          {person.name}
+        {"as "}{person.character}
         </p>
       </div>
     </div>
